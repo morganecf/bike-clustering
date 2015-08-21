@@ -1,0 +1,15 @@
+k=2
+Cluster#0: Custis Rosslyn Cyclists2013, MVT Airport South Cyclists2013, Key Bridge West Cyclists2013, WOD East Falls Church Cyclists2013, WOD Bon Air East Cyclists2013, Key Bridge East Cyclists2013, Totem_Laurier2013, PierDup2013, CSC2013, Berri12013, Parc2013, Maisonneuve_22013, Mirabel Cyclists2013, Rachel12013, LLYN2013, CRTZ2013, ORPY2013, LMET2013, COBY2013, ALEX2013
+Cluster#1: Gare de Tremblant Cyclists2013, GareNominingue Cyclists2013
+
+k=3
+Cluster#0: MVT Airport South Cyclists2013, WOD East Falls Church Cyclists2013, WOD Bon Air East Cyclists2013, PierDup2013, Mirabel Cyclists2013, CRTZ2013, COBY2013
+Cluster#1: Gare de Tremblant Cyclists2013, GareNominingue Cyclists2013
+Cluster#2: Custis Rosslyn Cyclists2013, Key Bridge West Cyclists2013, Key Bridge East Cyclists2013, Totem_Laurier2013, CSC2013, Berri12013, Parc2013, Maisonneuve_22013, Rachel12013, LLYN2013, ORPY2013, LMET2013, ALEX2013
+
+k=4
+Cluster#0: Key Bridge West Cyclists2013, Key Bridge East Cyclists2013, Totem_Laurier2013, CSC2013, Berri12013, Parc2013, Maisonneuve_22013, Rachel12013, ORPY2013, COBY2013, ALEX2013
+Cluster#1: Gare de Tremblant Cyclists2013, GareNominingue Cyclists2013
+Cluster#2: Custis Rosslyn Cyclists2013, LLYN2013, LMET2013
+Cluster#3: MVT Airport South Cyclists2013, WOD East Falls Church Cyclists2013, WOD Bon Air East Cyclists2013, PierDup2013, Mirabel Cyclists2013, CRTZ2013
+

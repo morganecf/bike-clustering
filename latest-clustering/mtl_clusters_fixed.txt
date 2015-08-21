@@ -1,0 +1,15 @@
+k=2
+Cluster#0: Totem_Laurier2014, Totem_Laurier2013, PierDup2011, PierDup2013, PierDup2012, Maisonneuve_12011, Maisonneuve_12012, Maisonneuve_12014, Maisonneuve_22012, Maisonneuve_22011, Mirabel Cyclists2012, CSC2013, Mirabel Cyclists2014, PierDup2014, Berri12013, Maisonneuve_22014, Parc2011, Parc2013, Parc2012, Parc2014, Maisonneuve_22013, Berri12012, CSC2012, CSC2011, Berri12011, Mirabel Cyclists2013, Berri12014, CSC2014, Rachel12011, Rachel12012, Rachel12013
+Cluster#1: Gare de Tremblant Cyclists2012, Gare de Tremblant Cyclists2013, Gare de Tremblant Cyclists2014, Prevost Cyclists2014, GareNominingue Cyclists2012, GareNominingue Cyclists2013, GareNominingue Cyclists2014
+
+k=3
+Cluster#0: Totem_Laurier2014, Totem_Laurier2013, PierDup2011, PierDup2013, PierDup2012, Maisonneuve_12011, Maisonneuve_12012, Maisonneuve_12014, Maisonneuve_22012, Maisonneuve_22011, Mirabel Cyclists2012, CSC2013, Mirabel Cyclists2014, PierDup2014, Berri12013, Maisonneuve_22014, Parc2011, Parc2013, Parc2012, Parc2014, Maisonneuve_22013, Berri12012, CSC2012, CSC2011, Berri12011, Mirabel Cyclists2013, Berri12014, CSC2014, Rachel12011, Rachel12012, Rachel12013
+Cluster#1: Gare de Tremblant Cyclists2012
+Cluster#2: Gare de Tremblant Cyclists2013, Gare de Tremblant Cyclists2014, Prevost Cyclists2014, GareNominingue Cyclists2012, GareNominingue Cyclists2013, GareNominingue Cyclists2014
+
+k=4
+Cluster#0: PierDup2011, PierDup2013, PierDup2012, Mirabel Cyclists2012, Mirabel Cyclists2014, PierDup2014, Mirabel Cyclists2013
+Cluster#1: Gare de Tremblant Cyclists2012
+Cluster#2: Totem_Laurier2014, Totem_Laurier2013, Maisonneuve_12011, Maisonneuve_12012, Maisonneuve_12014, Maisonneuve_22012, Maisonneuve_22011, CSC2013, Berri12013, Maisonneuve_22014, Parc2011, Parc2013, Parc2012, Parc2014, Maisonneuve_22013, Berri12012, CSC2012, CSC2011, Berri12011, Berri12014, CSC2014, Rachel12011, Rachel12012, Rachel12013
+Cluster#3: Gare de Tremblant Cyclists2013, Gare de Tremblant Cyclists2014, Prevost Cyclists2014, GareNominingue Cyclists2012, GareNominingue Cyclists2013, GareNominingue Cyclists2014
+

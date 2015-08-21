@@ -1,0 +1,15 @@
+k=2
+Cluster#0: Gare de Tremblant Cyclists2014, Prevost Cyclists2014, GareNominingue Cyclists2014
+Cluster#1: Custis Rosslyn Cyclists2014, Key Bridge West Cyclists2014, MVT Airport South Cyclists2014, Joyce St NB Cyclists2014, Joyce St SB Cyclists2014, WOD East Falls Church Cyclists2014, WOD Bon Air East Cyclists2014, Key Bridge East Cyclists2014, TR Island Cyclists2014, Totem_Laurier2014, Maisonneuve_12014, Mirabel Cyclists2014, PierDup2014, Maisonneuve_22014, Parc2014, Berri12014, CSC2014, LLYN2014, ALEX2014, LMET2014, CRTZ2014, ORPY2014, COBY2014
+
+k=3
+Cluster#0: Custis Rosslyn Cyclists2014, Key Bridge West Cyclists2014, Joyce St NB Cyclists2014, Joyce St SB Cyclists2014, Key Bridge East Cyclists2014, TR Island Cyclists2014, Totem_Laurier2014, Maisonneuve_12014, Maisonneuve_22014, Parc2014, Berri12014, CSC2014, LLYN2014, ALEX2014, LMET2014, ORPY2014
+Cluster#1: Gare de Tremblant Cyclists2014, Prevost Cyclists2014, GareNominingue Cyclists2014
+Cluster#2: MVT Airport South Cyclists2014, WOD East Falls Church Cyclists2014, WOD Bon Air East Cyclists2014, Mirabel Cyclists2014, PierDup2014, CRTZ2014, COBY2014
+
+k=4
+Cluster#0: Gare de Tremblant Cyclists2014, Prevost Cyclists2014, GareNominingue Cyclists2014
+Cluster#1: MVT Airport South Cyclists2014, Joyce St NB Cyclists2014, Joyce St SB Cyclists2014, WOD East Falls Church Cyclists2014, WOD Bon Air East Cyclists2014, Key Bridge East Cyclists2014, TR Island Cyclists2014, Totem_Laurier2014, COBY2014
+Cluster#2: Custis Rosslyn Cyclists2014, Key Bridge West Cyclists2014, Maisonneuve_12014, Maisonneuve_22014, Parc2014, Berri12014, CSC2014, LLYN2014, ALEX2014, LMET2014, ORPY2014
+Cluster#3: Mirabel Cyclists2014, PierDup2014, CRTZ2014
+

@@ -1,0 +1,265 @@
+(0) Treat holidays as weekends - use updated data from Dropbox xls files for Montreal and Ottawa (the second column has holiday data.  1 = holiday - 0 = not holiday).
+>>> the rest of the results use this 
+
+(1) Change AMI to (7am-10am) / (12pm - 3pm) and recreate AMI table for the counters
+
+=== NEW TIMES (7-10; 12-3) ===
+MONTREAL 
+location		WWI			AMI			PPI
+Totem_Laurier	0.741646385036	0.916185338795	4.27583225249
+Parc			0.500361718455	1.09411943898	6.10215053763
+CSC			0.542171546637	1.10067584935	5.65162907268
+Rachel1		0.84489373861	0.95982910147	12.3188405797
+Berri1		0.648336252627	0.985294927778	6.43600180914
+PierDup		1.36748217024	0.561015340856	33.0555555556
+Maisonneuve_1	0.561910363728	1.00343758065	7.37660581474
+Maisonneuve_2	0.560578060676	0.877363376492	5.3641025641
+
+OTTAWA
+location		WWI			AMI			PPI
+ALEX			0.704056781128	1.10985289356	3.71308016878
+LLYN			0.376531248824	1.62139656521	5.37037037037
+LMET			0.400147830491	1.3388197128	4.22003284072
+COBY			0.920163944667	0.743447928572	4.67561521253
+CRTZ			1.16239035211	0.71869606849	6.19047619048
+ORPY			0.818138029474	1.16208239223	21.1764705882
+
+>>> The AMIs get closer to 1 for Parc, Rachel, Berri, Maisonneuve1. PierDup gets a slight increase as well - not sure what class of path this one is. Maisonneuve2 decreases (not good because it's a utilitarian path, correct?) 
+
+=== ORIGINAL TIMES === (7-9; 11-13)
+MONTREAL
+location		WWI			AMI			PPI
+Totem_Laurier	0.741646385036	1.10947809448	4.27583225249
+Parc			0.500361718455	1.41835381167	6.10215053763
+CSC			0.542171546637	1.38685968925	5.65162907268
+Rachel1		0.84489373861	1.23592359215	12.3188405797
+Berri1		0.648336252627	1.26853896709	6.43600180914
+PierDup		1.36748217024	0.641867542528	33.0555555556
+Maisonneuve_1	0.561910363728	1.26170400669	7.37660581474
+Maisonneuve_2	0.560578060676	1.06246559581	5.3641025641
+
+OTTAWA
+location		WWI			AMI			PPI
+ALEX			0.704056781128	1.46223012469	3.71308016878
+LLYN			0.376531248824	2.38704723243	5.37037037037
+LMET			0.400147830491	1.81487031517	4.22003284072
+COBY			0.920163944667	0.895949840502	4.67561521253
+CRTZ			1.16239035211	0.768102181344	6.19047619048
+ORPY			0.818138029474	1.53684518203	21.1764705882
+
+(2) Change accepted dates to Apr 1 - Nov 30 (essentially the cycling season) from entire year
+DONE
+
+MONTREAL 
+location		WWI			AMI			PPI
+Totem_Laurier	0.7278988468	1.1148844383	2.62546168052
+Parc			0.495723280575	1.42517949689	3.7030995106
+CSC			0.533765422774	1.39562574877	3.45593869732
+Rachel1		0.839062627717	1.23745587424	8.47352024922
+Berri1		0.645280271521	1.27667790365	3.92011019284
+PierDup		1.34427369817	0.643085355687	19.4285714286
+Maisonneuve_1	0.555985520641	1.2713046128	4.46216768916
+Maisonneuve_2	0.558386021943	1.07246336521	3.29621848739
+
+OTTAWA
+location		WWI			AMI			PPI
+ALEX			0.704056781128	1.46223012469	3.71308016878
+LLYN			0.376531248824	2.38704723243	5.37037037037
+LMET			0.400147830491	1.81487031517	4.22003284072
+COBY			0.920163944667	0.895949840502	4.67561521253
+CRTZ			1.16239035211	0.768102181344	6.19047619048
+ORPY			0.818138029474	1.53684518203	21.1764705882
+
+(4) Perform clustering analysis
+>> clustering WITHOUT PPI but with adjusted times and holidays, and without the two extra montreal locations 
+
+----MTL----
+k=2
+Cluster#0: Parc, CSC, Maisonneuve_1
+Cluster#1: Rachel1, Berri1, Maisonneuve_2
+
+k=3
+Cluster#0: Parc, CSC, Berri1, Maisonneuve_1
+Cluster#1: Rachel1
+Cluster#2: Maisonneuve_2
+
+k=4
+Cluster#0: Rachel1
+Cluster#1: Berri1, Maisonneuve_1
+Cluster#2: Maisonneuve_2
+Cluster#3: Parc, CSC
+
+----OTTAWA----
+k=2
+Cluster#0: ALEX, LLYN, LMET, ORPY
+Cluster#1: COBY, CRTZ
+
+k=3
+Cluster#0: COBY, CRTZ
+Cluster#1: LLYN, LMET
+Cluster#2: ALEX, ORPY
+
+k=4
+Cluster#0: COBY, CRTZ
+Cluster#1: LMET
+Cluster#2: ALEX, ORPY
+Cluster#3: LLYN
+
+----BOTH----
+k=2
+Cluster#0: LLYN, LMET
+Cluster#1: Parc, CSC, Rachel1, Berri1, Maisonneuve_1, Maisonneuve_2, ALEX, COBY, CRTZ, ORPY
+
+k=3
+Cluster#0: Parc, CSC, Rachel1, Berri1, Maisonneuve_1, Maisonneuve_2, ALEX, ORPY
+Cluster#1: COBY, CRTZ
+Cluster#2: LLYN, LMET
+
+k=4
+Cluster#0: Parc, CSC, Rachel1, Berri1, Maisonneuve_1, Maisonneuve_2, ALEX, ORPY
+Cluster#1: LLYN
+Cluster#2: COBY, CRTZ
+Cluster#3: LMET
+
+(5) Modify HMI index to use weeks as a base time period. Perhaps we can call this peak period index (PPI)? PPI = (average of top 12 weeks) / (average of following 20 weeks).
+
+(6) Perform clustering analysis again so the modified index can be evaluated
+>>> clustering WITH PPI, holidays/adjusted times, and WITHOUT the 2 extra montreal counters 
+
+----MTL----
+k=2
+Cluster#0: Parc, CSC, Berri1, Maisonneuve_1, Maisonneuve_2
+Cluster#1: Rachel1
+
+k=3
+Cluster#0: Rachel1
+Cluster#1: Berri1, Maisonneuve_1
+Cluster#2: Parc, CSC, Maisonneuve_2
+
+k=4
+Cluster#0: Parc, Berri1
+Cluster#1: Rachel1
+Cluster#2: CSC, Maisonneuve_2
+Cluster#3: Maisonneuve_1
+
+----OTTAWA----
+k=2
+Cluster#0: ALEX, LLYN, LMET, COBY, CRTZ
+Cluster#1: ORPY
+
+k=3
+Cluster#0: LLYN, CRTZ
+Cluster#1: ORPY
+Cluster#2: ALEX, LMET, COBY
+
+k=4
+Cluster#0: ALEX, LMET, COBY
+Cluster#1: ORPY
+Cluster#2: CRTZ
+Cluster#3: LLYN
+
+----BOTH----
+k=2
+Cluster#0: Parc, CSC, Berri1, Maisonneuve_1, Maisonneuve_2, ALEX, LLYN, LMET, COBY, CRTZ
+Cluster#1: Rachel1, ORPY
+
+k=3
+Cluster#0: Parc, CSC, Berri1, Maisonneuve_1, Maisonneuve_2, ALEX, LLYN, LMET, COBY, CRTZ
+Cluster#1: ORPY
+Cluster#2: Rachel1
+
+k=4
+Cluster#0: Maisonneuve_2, ALEX, LMET, COBY
+Cluster#1: ORPY
+Cluster#2: Rachel1
+Cluster#3: Parc, CSC, Berri1, Maisonneuve_1, LLYN, CRTZ
+
+(7) Incorporate 2 additional counting sites from Montreal (found in new xls file in dropbox): Totem_Laurier and PierDup
+>>> clustering with PPI, additional counters, holidays/adjusted times 
+
+----MTL----
+k=2
+Cluster#0: PierDup
+Cluster#1: Totem_Laurier, Parc, CSC, Rachel1, Berri1, Maisonneuve_1, Maisonneuve_2
+
+k=3
+Cluster#0: Totem_Laurier, Parc, CSC, Berri1, Maisonneuve_1, Maisonneuve_2
+Cluster#1: PierDup
+Cluster#2: Rachel1
+
+k=4
+Cluster#0: Totem_Laurier
+Cluster#1: PierDup
+Cluster#2: Rachel1
+Cluster#3: Parc, CSC, Berri1, Maisonneuve_1, Maisonneuve_2
+
+----BOTH----
+k=2
+Cluster#0: Totem_Laurier, Parc, CSC, Rachel1, Berri1, Maisonneuve_1, Maisonneuve_2, ALEX, LLYN, LMET, COBY, CRTZ
+Cluster#1: PierDup, ORPY
+
+k=3
+Cluster#0: PierDup
+Cluster#1: Totem_Laurier, Parc, CSC, Berri1, Maisonneuve_1, Maisonneuve_2, ALEX, LLYN, LMET, COBY, CRTZ
+Cluster#2: Rachel1, ORPY
+
+k=4
+Cluster#0: Totem_Laurier, Parc, CSC, Berri1, Maisonneuve_1, Maisonneuve_2, ALEX, LLYN, LMET, COBY, CRTZ
+Cluster#1: ORPY
+Cluster#2: PierDup
+Cluster#3: Rachel1
+
+(8) Separate each counter by cycling season i.e. Rachel_2010, Rachel_2011 etc...
+Totem_Laurier2012 has no traffic count 
+Totem_Laurier2011 has no traffic count
+The rest have traffic counts for 2011-2014 
+
+(9) Perform clustering analysis again - check to see if multiple years of count data for a particular counter and clustered together.
+
+----MTL----
+k=2
+Cluster#0: PierDup2011, PierDup2013, PierDup2012, PierDup2014, Rachel12014
+Cluster#1: Totem_Laurier2014, Totem_Laurier2013, Maisonneuve_12011, Maisonneuve_12012, Maisonneuve_12013, Maisonneuve_12014, Maisonneuve_22014, Maisonneuve_22013, Maisonneuve_22012, Maisonneuve_22011, CSC2013, Berri12013, Parc2011, Parc2013, Parc2012, Parc2014, Berri12012, CSC2012, CSC2011, Berri12011, Berri12014, CSC2014, Rachel12011, Rachel12012, Rachel12013
+
+k=3
+Cluster#0: Totem_Laurier2014, Totem_Laurier2013, Maisonneuve_12011, Maisonneuve_12012, Maisonneuve_12013, Maisonneuve_12014, Maisonneuve_22014, Maisonneuve_22013, Maisonneuve_22012, Maisonneuve_22011, CSC2013, Berri12013, Parc2011, Parc2013, Parc2012, Parc2014, Berri12012, CSC2012, CSC2011, Berri12011, Berri12014, CSC2014, Rachel12011, Rachel12012, Rachel12013
+Cluster#1: PierDup2011, PierDup2013, PierDup2014
+Cluster#2: PierDup2012, Rachel12014
+
+k=4
+Cluster#0: Totem_Laurier2014, Totem_Laurier2013, Maisonneuve_12011, Maisonneuve_12013, Maisonneuve_12014, Maisonneuve_22014, Maisonneuve_22013, Maisonneuve_22012, Maisonneuve_22011, CSC2013, Parc2011, Parc2013, Parc2012, Parc2014, Berri12012, CSC2012, CSC2011, Berri12014, CSC2014, Rachel12011, Rachel12012, Rachel12013
+Cluster#1: PierDup2011, PierDup2013, PierDup2014
+Cluster#2: Maisonneuve_12012, Berri12013, Berri12011
+Cluster#3: PierDup2012, Rachel12014
+
+----OTTAWA----
+k=2
+Cluster#0: LLYN2014, LLYN2011, LLYN2012, LLYN2013, ALEX2011, LMET2012, LMET2011, ALEX2012, ALEX2014, LMET2014, CRTZ2014, CRTZ2011, CRTZ2012, CRTZ2013, ORPY2013, ORPY2011, ORPY2014, LMET2013, COBY2011, COBY2012, COBY2013, COBY2014, ALEX2013
+Cluster#1: ORPY2012
+
+k=3
+Cluster#0: LLYN2014, LLYN2011, LLYN2012, LLYN2013, ALEX2011, LMET2012, LMET2011, ALEX2012, ALEX2014, LMET2014, CRTZ2014, CRTZ2011, CRTZ2012, CRTZ2013, ORPY2011, LMET2013, COBY2011, COBY2012, COBY2013, COBY2014, ALEX2013
+Cluster#1: ORPY2012
+Cluster#2: ORPY2013, ORPY2014
+
+k=4
+Cluster#0: LLYN2014, LLYN2011, LLYN2012, LLYN2013, ALEX2011, LMET2012, LMET2011, ALEX2012, ALEX2014, LMET2014, CRTZ2014, CRTZ2011, CRTZ2013, LMET2013, COBY2011, COBY2012, COBY2013, COBY2014, ALEX2013
+Cluster#1: ORPY2012
+Cluster#2: ORPY2013
+Cluster#3: CRTZ2012, ORPY2011, ORPY2014
+
+----BOTH----
+k=2
+Cluster#0: Totem_Laurier2014, Totem_Laurier2013, PierDup2011, PierDup2013, PierDup2012, Maisonneuve_12011, Maisonneuve_12012, Maisonneuve_12013, Maisonneuve_12014, Maisonneuve_22014, Maisonneuve_22013, Maisonneuve_22012, Maisonneuve_22011, PierDup2014, CSC2013, Berri12013, Parc2011, Parc2013, Parc2012, Parc2014, Berri12012, CSC2012, CSC2011, Berri12011, Berri12014, CSC2014, Rachel12011, Rachel12012, Rachel12013, Rachel12014, LLYN2014, LLYN2011, LLYN2012, LLYN2013, ALEX2011, LMET2012, LMET2011, ALEX2012, ALEX2014, LMET2014, CRTZ2014, CRTZ2011, CRTZ2012, CRTZ2013, ORPY2013, ORPY2011, ORPY2014, LMET2013, COBY2011, COBY2012, COBY2013, COBY2014, ALEX2013
+Cluster#1: ORPY2012
+
+k=3
+Cluster#0: PierDup2011, PierDup2013, PierDup2012, PierDup2014, Rachel12014, ORPY2013, ORPY2011, ORPY2014
+Cluster#1: ORPY2012
+Cluster#2: Totem_Laurier2014, Totem_Laurier2013, Maisonneuve_12011, Maisonneuve_12012, Maisonneuve_12013, Maisonneuve_12014, Maisonneuve_22014, Maisonneuve_22013, Maisonneuve_22012, Maisonneuve_22011, CSC2013, Berri12013, Parc2011, Parc2013, Parc2012, Parc2014, Berri12012, CSC2012, CSC2011, Berri12011, Berri12014, CSC2014, Rachel12011, Rachel12012, Rachel12013, LLYN2014, LLYN2011, LLYN2012, LLYN2013, ALEX2011, LMET2012, LMET2011, ALEX2012, ALEX2014, LMET2014, CRTZ2014, CRTZ2011, CRTZ2012, CRTZ2013, LMET2013, COBY2011, COBY2012, COBY2013, COBY2014, ALEX2013
+
+k=4
+Cluster#0: Totem_Laurier2014, Totem_Laurier2013, Maisonneuve_12011, Maisonneuve_12012, Maisonneuve_12013, Maisonneuve_12014, Maisonneuve_22014, Maisonneuve_22013, Maisonneuve_22012, Maisonneuve_22011, CSC2013, Berri12013, Parc2011, Parc2013, Parc2012, Parc2014, Berri12012, CSC2012, CSC2011, Berri12011, Berri12014, CSC2014, Rachel12011, Rachel12012, Rachel12013, LLYN2014, LLYN2011, LLYN2012, LLYN2013, ALEX2011, LMET2012, LMET2011, ALEX2012, ALEX2014, LMET2014, CRTZ2014, CRTZ2011, CRTZ2013, LMET2013, COBY2011, COBY2012, COBY2013, COBY2014, ALEX2013
+Cluster#1: PierDup2011, PierDup2013, PierDup2014, ORPY2013
+Cluster#2: ORPY2012
+Cluster#3: PierDup2012, Rachel12014, CRTZ2012, ORPY2011, ORPY2014

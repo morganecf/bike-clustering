@@ -1,0 +1,15 @@
+k=2
+Cluster#0: Custis Rosslyn Cyclists2013, Key Bridge West Cyclists2013, Key Bridge East Cyclists2013
+Cluster#1: MVT Airport South Cyclists2013, WOD East Falls Church Cyclists2013, WOD Bon Air East Cyclists2013
+
+k=3
+Cluster#0: Key Bridge West Cyclists2013, Key Bridge East Cyclists2013
+Cluster#1: MVT Airport South Cyclists2013, WOD East Falls Church Cyclists2013, WOD Bon Air East Cyclists2013
+Cluster#2: Custis Rosslyn Cyclists2013
+
+k=4
+Cluster#0: WOD Bon Air East Cyclists2013
+Cluster#1: Key Bridge West Cyclists2013, Key Bridge East Cyclists2013
+Cluster#2: MVT Airport South Cyclists2013, WOD East Falls Church Cyclists2013
+Cluster#3: Custis Rosslyn Cyclists2013
+

@@ -1,0 +1,15 @@
+k=2
+Cluster#0: Custis Rosslyn Cyclists2012, WOD Bon Air East Cyclists2012, MVT Airport South Cyclists2012, WOD East Falls Church Cyclists2012, PierDup2012, Maisonneuve_12012, Maisonneuve_22012, Mirabel Cyclists2012, GareNominingue Cyclists2012, Parc2012, Berri12012, CSC2012, Rachel12012, LLYN2012, LMET2012, ALEX2012, CRTZ2012, ORPY2012, COBY2012
+Cluster#1: Gare de Tremblant Cyclists2012
+
+k=3
+Cluster#0: GareNominingue Cyclists2012
+Cluster#1: Custis Rosslyn Cyclists2012, WOD Bon Air East Cyclists2012, MVT Airport South Cyclists2012, WOD East Falls Church Cyclists2012, PierDup2012, Maisonneuve_12012, Maisonneuve_22012, Mirabel Cyclists2012, Parc2012, Berri12012, CSC2012, Rachel12012, LLYN2012, LMET2012, ALEX2012, CRTZ2012, ORPY2012, COBY2012
+Cluster#2: Gare de Tremblant Cyclists2012
+
+k=4
+Cluster#0: Custis Rosslyn Cyclists2012, Maisonneuve_12012, Maisonneuve_22012, Parc2012, Berri12012, CSC2012, Rachel12012, LLYN2012, LMET2012, ALEX2012, ORPY2012
+Cluster#1: Gare de Tremblant Cyclists2012
+Cluster#2: GareNominingue Cyclists2012
+Cluster#3: WOD Bon Air East Cyclists2012, MVT Airport South Cyclists2012, WOD East Falls Church Cyclists2012, PierDup2012, Mirabel Cyclists2012, CRTZ2012, COBY2012
+

@@ -1,0 +1,15 @@
+k=2
+Cluster#0: PierDup2012, Maisonneuve_12012, Maisonneuve_22012, Mirabel Cyclists2012, GareNominingue Cyclists2012, Parc2012, Berri12012, CSC2012, Rachel12012
+Cluster#1: Gare de Tremblant Cyclists2012
+
+k=3
+Cluster#0: PierDup2012, Maisonneuve_12012, Maisonneuve_22012, Mirabel Cyclists2012, Parc2012, Berri12012, CSC2012, Rachel12012
+Cluster#1: Gare de Tremblant Cyclists2012
+Cluster#2: GareNominingue Cyclists2012
+
+k=4
+Cluster#0: Maisonneuve_12012, Maisonneuve_22012, Parc2012, Berri12012, CSC2012, Rachel12012
+Cluster#1: Gare de Tremblant Cyclists2012
+Cluster#2: GareNominingue Cyclists2012
+Cluster#3: PierDup2012, Mirabel Cyclists2012
+

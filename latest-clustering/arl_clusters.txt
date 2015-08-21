@@ -1,0 +1,15 @@
+k=2
+Cluster#0: WOD Bon Air East Cyclists2012, MVT Airport South Cyclists2012, MVT Airport South Cyclists2013, MVT Airport South Cyclists2014, Joyce St NB Cyclists2014, Joyce St SB Cyclists2014, WOD East Falls Church Cyclists2013, WOD East Falls Church Cyclists2012, WOD East Falls Church Cyclists2014, WOD Bon Air East Cyclists2014, WOD Bon Air East Cyclists2013, TR Island Cyclists2014
+Cluster#1: Custis Rosslyn Cyclists2013, Custis Rosslyn Cyclists2012, Custis Rosslyn Cyclists2014, Key Bridge West Cyclists2014, Key Bridge West Cyclists2013, Key Bridge East Cyclists2014, Key Bridge East Cyclists2013
+
+k=3
+Cluster#0: WOD Bon Air East Cyclists2012, MVT Airport South Cyclists2012, MVT Airport South Cyclists2013, MVT Airport South Cyclists2014, WOD East Falls Church Cyclists2012, WOD East Falls Church Cyclists2014, WOD Bon Air East Cyclists2014, WOD Bon Air East Cyclists2013
+Cluster#1: Custis Rosslyn Cyclists2013, Custis Rosslyn Cyclists2012, Custis Rosslyn Cyclists2014, Key Bridge West Cyclists2014, Key Bridge West Cyclists2013
+Cluster#2: Joyce St NB Cyclists2014, Joyce St SB Cyclists2014, WOD East Falls Church Cyclists2013, Key Bridge East Cyclists2014, Key Bridge East Cyclists2013, TR Island Cyclists2014
+
+k=4
+Cluster#0: Custis Rosslyn Cyclists2013, Custis Rosslyn Cyclists2012
+Cluster#1: MVT Airport South Cyclists2012, MVT Airport South Cyclists2013, MVT Airport South Cyclists2014, Joyce St NB Cyclists2014, Joyce St SB Cyclists2014, WOD East Falls Church Cyclists2013, WOD East Falls Church Cyclists2012, WOD East Falls Church Cyclists2014, TR Island Cyclists2014
+Cluster#2: Custis Rosslyn Cyclists2014, Key Bridge West Cyclists2014, Key Bridge West Cyclists2013, Key Bridge East Cyclists2014, Key Bridge East Cyclists2013
+Cluster#3: WOD Bon Air East Cyclists2012, WOD Bon Air East Cyclists2014, WOD Bon Air East Cyclists2013
+
