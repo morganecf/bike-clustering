@@ -30,10 +30,10 @@ public class EcoUtils {
 	
 	public static void main(String[] args) {
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
-		map.put("morgane", 5);
-		map.put("gaetan", 10);
-		map.put("thierry", 21);
-		map.put("brigitte", 6);
+		map.put("a", 5);
+		map.put("b", 10);
+		map.put("c", 21);
+		map.put("d", 6);
 		
 		Map<String, Integer> result = sortByValue(map);
 		for (String s : result.keySet()) {
@@ -41,6 +41,7 @@ public class EcoUtils {
 			System.out.println(result.get(s));
 			System.out.println();
 		}
+		
 	}
 	
 }

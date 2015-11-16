@@ -15,55 +15,102 @@ import java.io.FileReader;
 
 /*
  * Clustering pipeline - given all of the aggregated data 
- * for a set of counter locations.   
+ * for a set of counter locations.
+ * 
+ * TODO: everything should be private, client should only 
+ * be able to access final aadb estiamte, confidence interval, 
+ * and correlation. 
  */
 public class EcoCluster {
 	
-	/* The number of counters being clustered */
-	int numClusters = 0;
+	/* API token */
+	String authToken;
 	
 	/* Used for PPI feature ratio */
 	static int topMonths = 12;
 	
-	/* HashMap containing a city's parsed, aggregated data, by counter location */
-	HashMap<String, HashMap<String, Integer>> data;
+	/* Long-term aggregated data */
+	HashMap<String, HashMap<String, Integer>> longTermData;
+	HashMap<String, HashMap<Integer, Integer>> longTermWeekData;
 	
-	/* HashMap containing a city's data aggregated by each day of the week */
-	HashMap<String, HashMap<Integer, Integer>> weekData; 
+	/* Short-term aggregated data */
+	HashMap<String, HashMap<String, Integer>> shortTermData;
+	HashMap<String, HashMap<Integer, Integer>> shortTermWeekData;
 	
-	/* HashMap containing a city's indexes (features) */
-	HashMap<String, double[]> features;
+	/* The long-term features (indexes) */
+	HashMap<String, double[]> longTermFeatures;
+	
+	/* The short-term features (indexes) */
+	HashMap<String, double[]> shortTermFeatures;
 	
 	/* Array of counter names */
 	String[] counters;
 	
+	/* Short-term counter */
+	String counter;
+	
 	/* The resulting cluster assignment - corresponds to indexing of this.counters */
 	int[] clusters;
 	
-	public EcoCluster(HashMap<String, HashMap<String, Integer>> data, HashMap<String, HashMap<Integer, Integer>> weekData) {
-		// Might want to deep copy this? 
-		this.data = data;
-		this.weekData = weekData;
-		this.numClusters = data.keySet().size();
-		this.counters = new String[this.numClusters];
+	/* Step size */
+	String step;
+	
+	/* Feature prototypes */
+	Attribute WWI;
+	Attribute AMI;
+	Attribute PPI;
+	FastVector featureVector;
+	
+	/* Training featureset */
+	Instances trainingSet;
+	
+	/* The result elements */
+	int AADBEstimate;
+	double[] confidenceInterval;
+	double correlation;
+	
+	/* 
+	 * @param shortTermId the short-term counter id
+	 * @param longTermIds a list of long-term counter ids
+	 * @param start the start date for the long-term data
+	 * @param end the end date for the long-term data
+	 * @param step the step size (hour, day, week, etc)
+	 */
+	public EcoCluster(String authToken, String[] longTermIds, String start, String end, String step) {
+		this.authToken = authToken;
+		this.step = step;
+		this.counters = longTermIds;
+		this.longTermFeatures = new HashMap<String, double[]>();
 		
-		// Keep the ordering of counters fixed 
-		int i = 0;
-		for (String location : this.data.keySet()) {
-			this.counters[i] = location;
-			i++;
-		}
+		// Fetch the data
+		EcoParser longEP = new EcoParser(longTermIds, start, end, step);
+		longEP.getData(authToken);
+		this.longTermData = longEP.data;
+		this.longTermWeekData = longEP.weekData;
+		
+		// Define the Weka features 
+		this.WWI = new Attribute("WWI");
+		this.AMI = new Attribute("AMI");
+		this.PPI = new Attribute("PPI");
+				
+		// Create the Weka feature vector prototype
+		this.featureVector = new FastVector(3);
+		featureVector.addElement(WWI);
+		featureVector.addElement(AMI);
+		featureVector.addElement(PPI);
+		
+		this.clusters = null;
 	}
 	
 	/*
 	 * For each counter location, calculates the indexes used as 
 	 * features in the clustering analysis. 
 	 */
-	public void getFeatures() {
+	public void getFeatures(HashMap<String, HashMap<String, Integer>> data, HashMap<String, HashMap<Integer, Integer>> weekData, HashMap<String, double[]> features) {
 		// Keep track of locations that don't have data ?
 		//ArrayList<String> no_data = new ArrayList<String>();
-		for (String location : this.data.keySet()) {
-			HashMap<String, Integer> values = this.data.get(location);
+		for (String location : data.keySet()) {
+			HashMap<String, Integer> values = data.get(location);
 		    double num_days = (double) (values.get("num_weekends") + values.get("num_weekdays"));
 		    
 		    if (num_days == 0) {
@@ -83,7 +130,7 @@ public class EcoCluster {
 		    double AMI = avg_morning_traffic / avg_midday_traffic;
 		    
 		    // PPI (avg of top 12 weeks / avg of following 20)
-		    Map<Integer, Integer> sorted = EcoUtils.sortByValue(this.weekData.get("location"));
+		    Map<Integer, Integer> sorted = EcoUtils.sortByValue(weekData.get("location"));
 		    int top = 0;
 		    int bottom = 0;
 		    int counter = 0;
@@ -98,53 +145,42 @@ public class EcoCluster {
 		    
 		    // Add features for this location 
 		    double[] indexes = {WWI, AMI, PPI};
-		    this.features.put(location, indexes);
+		    features.put(location, indexes);
 		}
 	}
 	
 	/*
-	 * Parse into Weka-compatible feature format. This is 
-	 * done separately/after the above method since multiple
-	 * clustering methods from different libraries were tested. 
+	 * Create the training feature set - parse into Weka-compatible features.
+	 * This is decoupled from this.getFeatures() so that the latter can be 
+	 * used for both short- and long-term counters. 
 	 */
-	public Instances getWekaFeatures() {
-		
-		// Define the Weka features 
-		Attribute WWI = new Attribute("WWI");
-		Attribute AMI = new Attribute("AMI");
-		Attribute PPI = new Attribute("PPI");
-		
-		// Create the Weka feature vector prototype
-		FastVector featureVector = new FastVector(3);
-		featureVector.addElement(WWI);
-		featureVector.addElement(AMI);
-		featureVector.addElement(PPI);
+	public void createTrainingFeatures() {
+		getFeatures(this.longTermData, this.longTermWeekData, this.longTermFeatures);
 		
 		// Initialize the Weka training set 
-		Instances trainingSet = new Instances("train", featureVector, this.numClusters);
-		
+		this.trainingSet = new Instances("train", this.featureVector, this.counters.length);
+				
 		for (String location : this.counters) {
-			double[] indexes = this.features.get(location);
+			double[] indexes = this.longTermFeatures.get(location);
 			
 			// Create the instance
 			Instance instance = new Instance(3);
-			instance.setValue((Attribute) featureVector.elementAt(0), indexes[0]);
-			instance.setValue((Attribute) featureVector.elementAt(1), indexes[1]);
-			instance.setValue((Attribute) featureVector.elementAt(2), indexes[2]);
+			instance.setValue((Attribute) this.featureVector.elementAt(0), indexes[0]);
+			instance.setValue((Attribute) this.featureVector.elementAt(1), indexes[1]);
+			instance.setValue((Attribute) this.featureVector.elementAt(2), indexes[2]);
 			
 			// Add the instance
 			trainingSet.add(instance);
 		}
-		 
-		return trainingSet;
 	}
+	
 	
 	/*
 	 * Use Weka's Kmeans clustering to cluster the counters. 
 	 * 
 	 * TODO: Kmeans exception handling
 	 */
-	public void cluster(Instances trainingSet) throws Exception {
+	public void cluster() throws Exception {
 		SimpleKMeans kmeans = new SimpleKMeans();
 		
 		// CONFIGURE THIS
@@ -155,7 +191,7 @@ public class EcoCluster {
 		kmeans.setNumClusters(4);
 		
 		// Cluster
-		kmeans.buildClusterer(trainingSet);
+		kmeans.buildClusterer(this.trainingSet);
 		
 		// Get the cluster assignments 
 		this.clusters = kmeans.getAssignments();
@@ -166,6 +202,63 @@ public class EcoCluster {
 			System.out.println(this.counters[i] + ": " + this.clusters[i]);
 		}
 	}
+	
+	/*
+	 * Classify a given short-term counter id. 
+	 */
+	public void classify(String shortTermId) {
+		// TODO: Error handling -- cannot call this unless the
+		// clustering has already been performed. 
+		if (this.clusters == null) {
+			System.out.println("Cluster first.");
+			return;
+		}
+		
+		// Get the data associated with this counter 
+		EcoParser shortEP = new EcoParser(shortTermId, this.step);
+		shortEP.getData(this.authToken);
+		this.shortTermData = shortEP.data;
+		this.shortTermWeekData = shortEP.weekData;
+		
+		// Initialize features
+		this.shortTermFeatures = new HashMap<String, double[]>();
+		
+		// Calculate features 
+		this.getFeatures(this.shortTermData, this.shortTermWeekData, this.shortTermFeatures);
+		
+		// Create the Weka instance 
+		double[] indexes = this.shortTermFeatures.get(shortTermId);
+		Instance instance = new Instance(3);
+		instance.setValue((Attribute) this.featureVector.elementAt(0), indexes[0]);
+		instance.setValue((Attribute) this.featureVector.elementAt(1), indexes[1]);
+		instance.setValue((Attribute) this.featureVector.elementAt(2), indexes[2]);
+		
+		// Find the cluster with the highest correlation
+		
+	}
 
+	/*
+	 * Extrapolate AADB based on closest long-term counter.
+	 * Calculate the confidence interval. 
+	 */
+	public void extrapolate() {
+	}
+	
+	
+	/*
+	 * Getter methods for classification results. 
+	 */
+	
+	public int getAADBEstimate() {
+		return this.AADBEstimate;
+	}
+	
+	public double getCorrelation() {
+		return this.correlation;
+	}
+	
+	public double[] getConfidenceInterval() {
+		return this.confidenceInterval;
+	}
 
 }

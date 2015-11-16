@@ -8,6 +8,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import org.json.JSONObject;
+
 /*
  * Parses CSV files containing the biking data. 
  * Contains methods for aggregating the data and
@@ -20,6 +22,17 @@ public class EcoParser {
 	
 	/* File containing a city's raw data */
 	String filePath;
+	
+	/* Short-term id */
+	String sid = null;
+	
+	/* List of long-term ids */
+	String[] lids = null;
+	
+	/* Search parameters */
+	String start = null;
+	String end = null;
+	String step;
 	
 	/* HashMap containing a city's parsed, aggregated data, by counter location */
 	HashMap<String, HashMap<String, Integer>> data;
@@ -38,10 +51,42 @@ public class EcoParser {
 	/* Date formatter */
 	static DateFormat dformat = new SimpleDateFormat("dd/MM/yyyy");
 	
-	public EcoParser(String filePath) {
-		this.filePath = filePath;
+	/*
+	 * Base constructor. 
+	 */
+	private EcoParser() {
 		this.data = new HashMap<String, HashMap<String, Integer>>();
 		this.weekData = new HashMap<String, HashMap<Integer, Integer>>();
+	}
+	
+	/*
+	 * File constructor - gets data from a file. 
+	 */
+	public EcoParser(String filePath) {
+		this();
+		this.filePath = filePath;
+	}
+	
+	/*
+	 * Short-term counter constructor - gets data for a given
+	 * short-term counter. 
+	 */
+	public EcoParser(String shortTermId, String step) {
+		this();
+		this.sid = shortTermId;
+		this.step = step;
+	}
+	
+	/*
+	 * Long-term counter constructor - gets data for a given 
+	 * list of long-term counters (start and end date must be specified). 
+	 */
+	public EcoParser(String[] longTermIds, String start, String end, String step) {
+		this();
+		this.lids = longTermIds;
+		this.step = step;
+		this.start = start;
+		this.end = end;
 	}
 	
 	/* Determines if a counter name is a location we're concerned with */
@@ -75,7 +120,7 @@ public class EcoParser {
 	 * Parses a csv file and returns the data in a 
 	 * hashmap, indexed by location. 
 	 */
-	public void parse() throws FileNotFoundException, ParseException {
+	public void parseFile() throws FileNotFoundException, ParseException {
 		File file = new File(this.filePath);
 		Scanner input = new Scanner(file);
 		
@@ -178,8 +223,51 @@ public class EcoParser {
 				
 			}
 		}
+	}
+	
+	/*
+	 * Aggregate JSON data. Can be called multiple times 
+	 * and will simply add to global data objects. 
+	 */
+	public void aggregate(JSONObject data, String location) {
+		// Initialize the count hashmaps for this given location
+		HashMap<String, Integer> counts = new HashMap<String, Integer>();
+		HashMap<Integer, Integer> weekCounts = new HashMap<Integer, Integer>();
 		
-		// Done - the data has been aggregated. 
+		// TODO: The aggregation 
+		
+		// Add to the global data object 
+		this.data.put(location, counts);
+		this.weekData.put(location, weekCounts);
+	}
+	
+	/*
+	 * Gets short- or long-term counter data from the REST API. 
+	 */
+	public void getData(String authToken) {
+		// Initialize the REST API 
+		EcoRest API = new EcoRest(authToken);
+		
+		// This is a long-term instance 
+		if (this.lids != null) {
+			for (String lid : this.lids) {
+				JSONObject data = API.counterDataByPeriod(lid, start, end, this.step);
+				aggregate(data, lid);
+			}
+		}
+		// This is a short-term instance
+		else if (this.sid != null) {
+			JSONObject data = API.counterData(this.sid, this.step);
+			aggregate(data, this.sid);
+		}
+		// Otherwise must have been initialized with file constructor
+		else {
+			try {
+				this.parseFile();
+			} catch (FileNotFoundException | ParseException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public static void main(String[] args) {

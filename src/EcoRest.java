@@ -114,25 +114,11 @@ public class EcoRest {
 	public JSONObject counterDataByPeriod(String cid, String start, String end, String step) {
 		return this.get("data/all/" + cid + "?begin=" + start + "&end=" + end + "&step=" + step);
 	}
-
+	
 	public static void main(String[] args) throws JSONException {
-//		EcoRest er = new EcoRest("zh468c8b");
-//		JSONObject obj = er.channel("100011746");
-//		System.out.println(obj);
-//		System.out.println(((JSONArray)obj.get("data")).length());
-		
-//		Calendar cal = Calendar.getInstance();
-//		System.out.println(cal.getTime());
-//		System.out.println(cal.get(Calendar.DAY_OF_WEEK));
-//		cal.add(Calendar.DAY_OF_MONTH, 1);
-//		System.out.println(cal.get(Calendar.DAY_OF_WEEK));
-//		cal.add(Calendar.DAY_OF_MONTH, 1);
-//		System.out.println(cal.get(Calendar.DAY_OF_WEEK));
-//		cal.add(Calendar.DAY_OF_MONTH, 1);
-//		System.out.println(cal.get(Calendar.DAY_OF_WEEK));
-		
-		
-		
+		EcoRest er = new EcoRest("zh468c8b");
+		String counter_id = "100025495";
+		System.out.println(er.counterData(counter_id, "2"));
 	}
 
 }
