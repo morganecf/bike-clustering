@@ -139,7 +139,7 @@ def counter(filename):
 		# PPI (avg of top 12 weeks / avg of following 20)
 		week_vals = list(data[location]['by_week'].iteritems())
 		week_vals.sort(key=lambda t: t[1], reverse=True)
-
+ 
 		# print '====================', location, '================================'
 		# for month_bin, count in week_vals:
 		# 	print month_bin, '\t', count
